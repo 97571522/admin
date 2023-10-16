@@ -1,0 +1,15 @@
+<div class="media">
+  <div id="upload-notice"></div>
+  <div id="upload-error"></div>
+  <div class="upload-ui">
+    <div (files)="onFilesSelected($event)" appUpload class="drag-drop-area">
+      <div class="drag-drop-inside">
+        <p class="drag-drop-info">Drop files to upload</p>
+        <p>or</p>
+        <p class="drag-drop-buttons">
+          <input class="button" id="plupload-browse-button" type="button" value="Select Files"/>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

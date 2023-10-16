@@ -1,0 +1,107 @@
+<!--<mat-progress-bar class="loading" mode="buffer" value="40"></mat-progress-bar>-->
+<mat-toolbar class="ea-toolbar mat-elevation-z3">
+  <button (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Admin App</span>
+  <span class="ea-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with help icon">
+    <mat-icon>help</mat-icon>
+  </button>
+  <button [matMenuTriggerFor]="theme" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with format_color_fill icon">
+    <mat-icon>format_color_fill</mat-icon>
+  </button>
+  <mat-menu #theme="matMenu">
+    <div class="create-setting">
+      <button mat-menu-item routerLink="/backlinks/add-post">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        创建帖子
+      </button>
+      <button mat-menu-item routerLink="/backlinks/media-upload">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        上传媒体
+      </button>
+      <button mat-menu-item routerLink="/backlinks/add-post">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        创建帖子
+      </button>
+    </div>
+  </mat-menu>
+  <button [matMenuTriggerFor]="create" class="create-link" mat-stroked-button>
+    <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+    创建
+  </button>
+  <mat-menu #create="matMenu">
+    <div class="create-setting">
+      <button mat-menu-item routerLink="/backlinks/add-post">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        创建帖子
+      </button>
+      <button mat-menu-item routerLink="/backlinks/media-upload">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        上传媒体
+      </button>
+      <button mat-menu-item routerLink="/backlinks/add-post">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        创建帖子
+      </button>
+    </div>
+  </mat-menu>
+  <button [matMenuTriggerFor]="apps" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with apps icon">
+    <mat-icon>apps</mat-icon>
+  </button>
+  <mat-menu #apps="matMenu">
+    <div class="create-setting">
+      <button mat-menu-item routerLink="/backlinks/add-post">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        创建帖子
+      </button>
+      <button mat-menu-item routerLink="/backlinks/media-upload">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        上传媒体
+      </button>
+      <button mat-menu-item routerLink="/backlinks/add-post">
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        创建帖子
+      </button>
+    </div>
+  </mat-menu>
+  <div [matMenuTriggerFor]="menu" class="account">
+    <div class="avatar">
+      <img
+        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202106%2F09%2F20210609081952_51ef5.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1686399646&t=f589d3f8670c24e6c177933c0ccbf0c0">
+    </div>
+  </div>
+  <mat-menu #menu="matMenu">
+    <div class="user">
+      <img
+        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202106%2F09%2F20210609081952_51ef5.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1686399646&t=f589d3f8670c24e6c177933c0ccbf0c0">
+      <div class="name">
+        <div>Yulin Liu</div>
+        <div>@yulinliu9223</div>
+      </div>
+    </div>
+    <div class="setting">
+      <button mat-menu-item>
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        您的频道
+      </button>
+      <button mat-menu-item>
+        <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
+        YouTube
+      </button>
+      <button mat-menu-item routerLink="/signout">
+        <mat-icon aria-hidden="false" aria-label="Example exit_to_app icon" fontIcon="exit_to_app"></mat-icon>
+        退出账号
+      </button>
+    </div>
+  </mat-menu>
+</mat-toolbar>
+<mat-drawer-container autosize class="ea-container">
+  <mat-drawer #drawer class="ea-sidenav mat-drawer-side" mode="side" opened>
+    <app-sidebar-menu></app-sidebar-menu>
+  </mat-drawer>
+  <mat-drawer-content class="ea-content">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

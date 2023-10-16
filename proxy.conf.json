@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "http://admin.enterprisealliance.net",
+    "timeout": 6000,
+    "secure": false,
+    "changeOrigin": true
+  }
+}

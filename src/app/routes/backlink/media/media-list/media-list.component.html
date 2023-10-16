@@ -1,0 +1,76 @@
+<div class="ea-content-body">
+  <mat-form-field class="ea-filter">
+    <mat-label>Filter</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput placeholder="Ex. ium">
+  </mat-form-field>
+  <mat-table (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z0" matSort>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select" sticky>
+      <mat-header-cell *matHeaderCellDef class="select-checkbox">
+        <mat-checkbox (change)="$event ? toggleAllRows() : null" [aria-label]="checkboxLabel()"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="select-checkbox">
+        <mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()"
+                      [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef class="select-id" mat-sort-header> ID</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="select-id"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef class="title" mat-sort-header> Title</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="excerpt">
+      <mat-header-cell *matHeaderCellDef class="excerpt" mat-sort-header> Excerpt</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.excerpt}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date_add">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>date_add</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{toolsService.getFormattedTime(element.date_add)}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date_upd">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> date_upd</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{toolsService.getFormattedTime(element.date_upd)}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="star">
+      <mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="editPost(element.id)" mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button disabled mat-menu-item>
+            <mat-icon>voicemail</mat-icon>
+            <span>Check voice mail</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Disable alerts</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns" class="row-hover"></mat-row>
+  </mat-table>
+
+  <mat-paginator (page)="onPageChanged($event)" [length]="totalCount" [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 10, 25, 50]" [pageSize]="pageSize"></mat-paginator>
+</div>

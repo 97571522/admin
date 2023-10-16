@@ -1,0 +1,151 @@
+<div class="ea-content-body">
+  <form (ngSubmit)="onSubmit()" [formGroup]="postForm">
+    <div class="content-content">
+      <mat-card class="ea-card">
+        <mat-card-header>
+          <mat-card-title>Base</mat-card-title>
+          <mat-card-subtitle>Start</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 100 characters">
+            <mat-label>Post Title</mat-label>
+            <input #inputTitle
+                   formControlName="postTitle"
+                   matInput
+                   maxlength="100"
+            >
+            <mat-hint align="end">{{inputTitle.value.length}}/100</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 500 characters">
+            <mat-label>Post Excerpt</mat-label>
+            <textarea #inputExcerpt
+                      formControlName="postExcerpt"
+                      matInput
+                      maxlength="500"
+            ></textarea>
+            <mat-hint align="end">{{inputExcerpt.value.length}}/500</mat-hint>
+          </mat-form-field>
+
+          <div class="ea-form-field edit">
+            <app-ea-editor [elementId]="'xxxxeditor'" [inputContent]="inputContent" (editorContent)="onEditorValueChange($event)" [pageId]="pageId"></app-ea-editor>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="ea-card">
+        <mat-card-header>
+          <mat-card-title>Media</mat-card-title>
+          <mat-card-subtitle>Start</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="ea-form-field">
+            <div class="media">
+              <ul class="list">
+                <li *ngFor="let file of postGallery; let i = index;" class="item">
+                  <div class="item-wrapper">
+                    <img [src]="file.mediaUrl" alt="file.mediaTitle" height="150" width="150"/>
+                    <div class="action">
+                      <button (click)="removeMedia(file)" type="button">remove</button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <button (click)="updateMedia()" mat-button type="button">Open dialog</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="content-sidebar">
+      <mat-card class="ea-card">
+        <mat-card-content>
+          <mat-form-field appearance="outline" class="ea-form-field">
+            <mat-label>Post Status</mat-label>
+            <mat-select formControlName="postStatus">
+              <mat-option *ngFor="let option of statusOption" [value]="option.value">{{ option.label }}</mat-option>
+            </mat-select>
+            <mat-hint>Errors appear instantly!</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ea-form-field">
+            <mat-label>Post Website</mat-label>
+            <mat-chip-grid #postWebsite aria-label="Enter keywords" formControlName="postWebsite">
+              <mat-chip-row (removed)="removeWebsite(website)" *ngFor="let website of websites">
+                {{website}}
+                <button aria-label="'remove ' + website" matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input (matChipInputTokenEnd)="addWebsite($event)"
+                   [matChipInputFor]="postWebsite"
+                   placeholder="New keyword..."/>
+            <button (click)="openWebsiteSelect()" mat-icon-button matSuffix type="button">
+              <mat-icon>public</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ea-form-field">
+            <mat-label>Add Date</mat-label>
+            <input [matDatepicker]="postAddDate" formControlName="postAddDate" matInput>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle [for]="postAddDate" matIconSuffix></mat-datepicker-toggle>
+            <mat-datepicker #postAddDate></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ea-form-field">
+            <mat-label>Update Date</mat-label>
+            <input [matDatepicker]="postUpdateDate" formControlName="postUpdateDate" matInput>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle [for]="postUpdateDate" matIconSuffix></mat-datepicker-toggle>
+            <mat-datepicker #postUpdateDate></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>3234</mat-label>
+            <span matPrefix> &nbsp;Https:// &nbsp;</span>
+            <input formControlName="postUrlAlias" matInput placeholder="555-555-1234" type="text">
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 100 characters">
+            <mat-label>Seo Title</mat-label>
+            <input #inputTitle
+                   formControlName="postSeoTitle"
+                   matInput
+                   maxlength="100"
+            >
+            <mat-hint align="end">{{inputTitle.value.length}}/100</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ea-form-field">
+            <mat-label>Seo keywords</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Enter keywords" formControlName="postSeoKeyword">
+              <mat-chip-row (removed)="removeKeyword(keyword)" *ngFor="let keyword of keywords">
+                {{keyword}}
+                <button aria-label="'remove ' + keyword" matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input (matChipInputTokenEnd)="addKeyword($event)"
+                   [matChipInputFor]="chipGrid"
+                   placeholder="New keyword..."/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 500 characters">
+            <mat-label>Seo Excerpt</mat-label>
+            <textarea #inputExcerpt
+                      formControlName="postSeoExcerpt"
+                      matInput
+                      maxlength="500"
+            ></textarea>
+            <mat-hint align="end">{{inputExcerpt.value.length}}/500</mat-hint>
+          </mat-form-field>
+          <div class="ea-button-row">
+            <button class="ea-button" mat-stroked-button>Clear</button>
+            <button class="ea-button" color="primary" mat-stroked-button type="submit">Save</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>
+</div>

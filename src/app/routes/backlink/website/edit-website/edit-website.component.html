@@ -1,0 +1,115 @@
+<div class="ea-content-body">
+  <form (ngSubmit)="onSubmit()" [formGroup]="websiteForm">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Base</mat-card-title>
+        <mat-card-subtitle>Start</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 100 characters">
+          <mat-label>website Domain</mat-label>
+          <span matPrefix>&nbsp;&nbsp;&nbsp;https://</span>
+          <input #inputDomain
+                 formControlName="websiteDomain"
+                 matInput
+                 maxlength="100"
+          >
+          <mat-hint align="end">{{inputDomain.value.length}}/100</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 100 characters">
+          <mat-label>website Title</mat-label>
+          <input #inputTitle
+                 formControlName="websiteTitle"
+                 matInput
+                 maxlength="100"
+          >
+          <mat-hint align="end">{{inputTitle.value.length}}/100</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 500 characters">
+          <mat-label>website Description</mat-label>
+          <textarea #inputDescription
+                    formControlName="websiteDescription"
+                    matInput
+                    maxlength="500"
+          ></textarea>
+          <mat-hint align="end">{{inputDescription.value.length}}/500</mat-hint>
+        </mat-form-field>
+
+        <div class="ea-form-fields">
+          <mat-form-field appearance="outline" class="ea-form-field">
+            <mat-label>website Status</mat-label>
+            <mat-select formControlName="websiteStatus">
+              <mat-option [value]="1">active</mat-option>
+              <mat-option [value]="0">2321</mat-option>
+              <mat-option [value]="-1">2321</mat-option>
+            </mat-select>
+            <mat-hint>Errors appear instantly!</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="ea-form-field">
+            <mat-label>Choose a date</mat-label>
+            <input [matDatepicker]="picker" formControlName="websiteDate" matInput>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-header>
+        <mat-card-title>SEO</mat-card-title>
+        <mat-card-subtitle>Start</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 100 characters">
+          <mat-label>Seo Title</mat-label>
+          <input #inputTitle
+                 formControlName="websiteSeoTitle"
+                 matInput
+                 maxlength="100"
+                 value="{{website.websiteSeoTitle}}"
+          >
+          <mat-hint align="end">{{inputTitle.value.length}}/100</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ea-form-field">
+          <mat-label>Seo keywords</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Enter keywords" formControlName="websiteSeoKeyword">
+            <mat-chip-row (removed)="removeKeyword(keyword)" *ngFor="let keyword of keywords">
+              {{keyword}}
+              <button aria-label="'remove ' + keyword" matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input (matChipInputTokenEnd)="addKeyword($event)"
+                 [matChipInputFor]="chipGrid"
+                 placeholder="New keyword..."/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="ea-form-field" hintLabel="Max 500 characters">
+          <mat-label>Seo Excerpt</mat-label>
+          <textarea #inputExcerpt
+                    formControlName="websiteSeoExcerpt"
+                    matInput
+                    maxlength="500"
+                    value="{{website.websiteSeoExcerpt}}"
+          ></textarea>
+          <mat-hint align="end">{{inputExcerpt.value.length}}/500</mat-hint>
+        </mat-form-field>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <div class="ea-button-row">
+          <button class="ea-button" mat-stroked-button>Clear</button>
+          <button *ngIf="isNewWebsite" class="ea-button" color="primary" mat-stroked-button type="submit">Add Website
+          </button>
+          <button *ngIf="!isNewWebsite" class="ea-button" color="primary" mat-stroked-button type="submit">Update
+            Website
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

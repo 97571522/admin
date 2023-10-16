@@ -1,0 +1,73 @@
+<h2 class="ea-dialog-title" mat-dialog-title>Website List</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field class="ea-form-field">
+    <mat-label>Filter</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput placeholder="Ex. ium">
+  </mat-form-field>
+
+  <table [dataSource]="dataSource" class="mat-elevation-z0" mat-table>
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th *matHeaderCellDef mat-header-cell>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                      [aria-label]="checkboxLabel()"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td *matCellDef="let row" mat-cell>
+        <mat-checkbox (change)="$event ? selection.toggle(row) : null"
+                      (click)="$event.stopPropagation()"
+                      [aria-label]="checkboxLabel(row)"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell> id.</th>
+      <td *matCellDef="let element" mat-cell> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="title">
+      <th *matHeaderCellDef mat-header-cell> title</th>
+      <td *matCellDef="let element" mat-cell> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="key">
+      <th *matHeaderCellDef mat-header-cell> domain</th>
+      <td *matCellDef="let element" mat-cell> {{element.key}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="status">
+      <th *matHeaderCellDef mat-header-cell> status</th>
+      <td *matCellDef="let element" mat-cell> {{element.status}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="date_upd">
+      <th *matHeaderCellDef mat-header-cell> date_upd</th>
+      <td *matCellDef="let element" mat-cell> {{this.toolsService.getFormattedTime(element.date_upd)}} </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+    <mat-paginator
+      [length]="length"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageSize]="pageSize"
+      aria-label="Select page of users"></mat-paginator>
+  </table>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button color="primary" mat-dialog-close mat-raised-button>Cancel</button>
+  <button (click)="selectWebsite()" [mat-dialog-close]="true" color="primary" mat-raised-button>Select Website</button>
+</mat-dialog-actions>
